@@ -1,0 +1,143 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SearchBox</title>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.intellisense.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+        #searchContainer {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        #searchSpinner {
+            position: absolute;
+            right: 28px;
+            width: 20px;
+            height: 20px;
+            top: 18px;
+        }
+
+        .noresult #searchSpinner, .noresult #searchResult {
+            display: none;
+        }
+
+        .noresult.inprogress #searchSpinner {
+            display: inline-block !important;
+        }
+
+        .hasresult #searchSpinner {
+            display: none;
+        }
+
+        .hasresult #searchResult {
+            display: inline-block;
+        }
+    </style>
+
+    <script>
+        $(function () {
+
+            var iller = [
+                {
+                    id = 1,
+                    name = "Ankara"
+
+                },
+                {
+                    id = 2,
+                    name = "Adana"
+                },
+
+                {
+                    id = 3,
+                    name = "Urfa"
+                },
+
+                {
+                    id = 4,
+                    name = "Kars"
+                },
+
+                {
+                    id = 5,
+                    name = "Rize" 
+                }
+
+            ];
+
+            function filterIller(aranan) {
+                var bulunanlar = [];
+                for (var i = 0; i < iller.length; i++) {
+                    if (iller[i].n ame.toUpperCase.indexOf(aranan.toUpperCase()) > -1) {
+                        bulunanlar.push(iller[i]);
+                    }
+                }
+                return bulunanlar;
+            }
+
+            function illerToHtml(iller) {
+                var htmls = "";
+                for (var i = 0; i < iller.length; i++) {
+                    htmls += '<a href="#" class="list-group-item list-group-item-action">' + iller[i].name + '</a>';
+                }
+                return htmls;
+            }
+
+            var searchInput = $("searchInput");
+
+            searchInput.keyup(function () {
+                var value = searchInput.val();
+                if (value.length) {
+                    $("#searchContainer").addClass("inprogress");
+
+                    setTimeout(function () {
+                        var filterarray = filterIller(value);
+
+                        var resultHtml = illerToHtml(filterarray);
+                        $("#searchResultItems").html(resultHtml);
+                        $("#searchContainer").removeClass("inprogress").removeClass("noresult").addClass("hasresult");
+                    }, 1000)
+                }
+                else {
+                    $("#searchContainer").removeClass("inprogress").addClass("noresult").removeClass("hasresult");
+                }
+
+
+
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+        <div class="collapse navbar-collapse noresult" id="searchContainer">
+            <div id="searchSpinner" class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+
+
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
+            <div id="searchResult">
+                <div class="list-group" id="searchResultItems">
+                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus </a>
+                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac </a>
+                    <a href="#" class="list-group-item list-group-item-action disabled ">Vestibulum at eros</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

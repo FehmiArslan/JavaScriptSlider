@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Jquery</title>
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <style>
+        .kirmiziAlan{
+            background-color: red !important;
+            color:white;
+            width: 250px !important;
+            height: 400px !important;
+        }
+    </style>
+    <script>
+        $(function () {
+            var dv1 = $("#dv1");
+            var anahtar = false;
+
+            dv1.click(function () {
+                if (anahtar == false) {
+                    dv1.addClass("kirmiziAlan")
+                }
+                else {
+                    dv1.removeClass("kirmiziAlan")
+                }
+                anahtar = !anahtar;
+            })
+            var dv2 = $("#dv2");
+            dv2.click(function () {
+                dv2.toggleClass("kirmiziAlan");
+            })
+             
+        })
+
+    </script>
+</head>
+<body>
+    <div id="dv1">
+        Divim
+    </div>
+    <div id="dv2">
+        Divim2
+    </div>
+</body>
+</html>
